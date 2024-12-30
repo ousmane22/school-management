@@ -1,0 +1,19 @@
+type Query{
+   getAllStudent:[Student]
+   studentById(id:Int) : Student
+}
+
+type Mutation{
+  saveStudent(student:StudentRequest):Student
+}
+
+type Student{
+   id: Int,
+   firstname: String,
+   lastname: String
+}
+
+input StudentRequest{
+   firstname: String,
+   lastname: String,
+}
