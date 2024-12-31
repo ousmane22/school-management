@@ -10,9 +10,9 @@ public class StudentMapper {
     private ModelMapper modelMapper = new ModelMapper();
 
     public Student from(StudentRequest studentRequest) {
-//       Student student = new Student();
-//      student.setFirstname(studentRequest.firstname());
-//      student.setLastname(studentRequest.lastname());
+        if (studentRequest == null) {
+            throw new IllegalArgumentException("StudentRequest cannot be null");
+        }
         return modelMapper.map(studentRequest, Student.class);
     }
 }

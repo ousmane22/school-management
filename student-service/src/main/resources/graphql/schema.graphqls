@@ -1,19 +1,21 @@
-type Query{
-   getAllStudent:[Student]
-   studentById(id:Int) : Student
+type Query {
+   getAllStudents: [Student]
+   studentById(id: Int): Student
 }
 
-type Mutation{
-  saveStudent(student:StudentRequest):Student
+type Mutation {
+   saveStudent(studentRequest: StudentRequest): Student
+   updateStudent(id: Int, studentRequest: StudentRequest): Student
+   deleteStudent(id: Int): String
 }
 
-type Student{
-   id: Int,
-   firstname: String,
+type Student {
+   id: Int
+   firstname: String
    lastname: String
 }
 
-input StudentRequest{
-   firstname: String,
-   lastname: String,
+input StudentRequest {
+   firstname: String
+   lastname: String
 }

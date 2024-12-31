@@ -16,26 +16,43 @@ import java.util.List;
 @AllArgsConstructor
 public class StudentGraphQLController {
 
-    private StudentRepository studentRepository;
-    private StudentMapper studentMapper;
+    private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
     @QueryMapping
-    public List<Student> getAllStudent(){
+    public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
     @QueryMapping
     public Student studentById(@Argument Long id) {
-        Student student = studentRepository.findById(id).orElse(null);
-        if(student == null) throw new RuntimeException("Student not found");
-
-        return student;
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found with ID: " + id));
     }
 
     @MutationMapping
-    public Student saveStudent(@Argument StudentRequest student) {
-      Student studentEntity = studentMapper.from(student);
+    public Student saveStudent(@Argument StudentRequest studentRequest) {
+        Student studentEntity = studentMapper.from(studentRequest);
+        return studentRepository.save(studentEntity);
+    }
 
-       return studentRepository.save(studentEntity);
+    @MutationMapping
+    public Student updateStudent(@Argument Long id, @Argument StudentRequest studentRequest) {
+        Student existingStudent = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found with ID: " + id));
+
+        existingStudent.setFirstname(studentRequest.getFirstname());
+        existingStudent.setLastname(studentRequest.getLastname());
+
+        return studentRepository.save(existingStudent);
+    }
+
+    @MutationMapping
+    public String deleteStudent(@Argument Long id) {
+        Student existingStudent = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found with ID: " + id));
+
+        studentRepository.delete(existingStudent);
+        return "Student with ID " + id + " has been deleted successfully.";
     }
 }

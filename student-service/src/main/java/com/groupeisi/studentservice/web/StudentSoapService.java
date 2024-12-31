@@ -33,8 +33,8 @@ public class StudentSoapService {
     }
 
     @WebMethod
-    public Student addStudent(@WebParam StudentRequest studentRequest){
-       Student student = studentMapper.from(studentRequest);
+    public Student addStudent(@WebParam(name = "student") StudentRequest studentRequest){
+        Student student = studentMapper.from(studentRequest);
         return studentRepository.save(student);
     }
 }
