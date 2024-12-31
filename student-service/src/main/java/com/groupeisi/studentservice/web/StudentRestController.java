@@ -1,13 +1,16 @@
 package com.groupeisi.studentservice.web;
 
 import com.groupeisi.studentservice.dtos.StudentRequest;
+import com.groupeisi.studentservice.entities.Classroom;
 import com.groupeisi.studentservice.entities.Student;
 import com.groupeisi.studentservice.mapper.StudentMapper;
 import com.groupeisi.studentservice.services.StudentService;
 import lombok.AllArgsConstructor;
+import org.springframework.graphql.client.HttpGraphQlClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -51,5 +54,23 @@ public class StudentRestController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/gql/classrooms")
+    public Mono<List<Classroom>> customerListGql(){
+        HttpGraphQlClient graphQlClient = HttpGraphQlClient.builder()
+                .url("http://localhost:9999/classroom-service/graphql")
+                .build();
+        var httpRequestDocument= """
+                 query {
+                     getAllClassrooms{
+                       name,capacity, id
+                     }
+                   }
+                """;
+        Mono<List<Classroom>> classrooms = graphQlClient.document(httpRequestDocument)
+                .retrieve("getAllClassrooms")
+                .toEntityList(Classroom.class);
+        return classrooms;
     }
 }
