@@ -1,0 +1,108 @@
+version: '3.8'
+
+services:
+  consul:
+    image: hashicorp/consul:latest
+    container_name: consul-server
+    ports:
+      - "8500:8500"       
+      - "8600:8600/udp"   
+    command: agent -server -bootstrap-expect=1 -ui -client=0.0.0.0
+    volumes:
+      - ./consul/data:/consul/data
+      - ./consul/config:/consul/config
+    environment:
+      CONSUL_BIND_INTERFACE: eth0
+    networks:
+      - shared-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8500/v1/status/leader"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  config-service:
+    build: ./config-service  
+    container_name: config-service
+    ports:
+      - "8888:8888"            
+    networks:
+      - shared-network
+    depends_on:
+      consul:
+        condition: service_healthy              
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONSUL_HOST: consul-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  student-service:
+    build: ./student-service  
+    container_name: student-service
+    ports:
+      - "8081:8081"  
+    networks:
+      - shared-network
+    depends_on:
+      consul:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONSUL_HOST: consul-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  classroom-service:
+    build: ./classroom-service
+    container_name: classroom-service
+    ports:
+      - "8082:8082"
+    networks:
+      - shared-network
+    depends_on:
+      consul:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONSUL_HOST: consul-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  gateway-service:
+    build: ./gateway-service
+    container_name: gateway-service
+    ports:
+      - "9999:9999"
+    networks:
+      - shared-network
+    depends_on:
+      consul:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONSUL_HOST: consul-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9999/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  shared-network:
+    driver: bridge

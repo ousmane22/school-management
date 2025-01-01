@@ -1,15 +1,16 @@
 import { Student } from '../types';
 
-const API_URL = 'http://localhost:9999/student-service/api/students';
+const API_URL = 'http://localhost:9999/student-service/api';
 
+// Fetch students
 export const fetchStudents = async (): Promise<Student[]> => {
-  const response = await fetch(API_URL);
+  const response = await fetch(`${API_URL}/students`);  
   if (!response.ok) throw new Error('Failed to fetch students');
   return response.json();
 };
 
 export const createStudent = async (student: Omit<Student, 'id'>): Promise<Student> => {
-  const response = await fetch(API_URL, {
+  const response = await fetch(`${API_URL}/student`, {  
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(student),
@@ -19,7 +20,7 @@ export const createStudent = async (student: Omit<Student, 'id'>): Promise<Stude
 };
 
 export const updateStudent = async (student: Student): Promise<Student> => {
-  const response = await fetch(`${API_URL}/${student.id}`, {
+  const response = await fetch(`${API_URL}/student/${student.id}`, { 
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(student),
@@ -29,6 +30,8 @@ export const updateStudent = async (student: Student): Promise<Student> => {
 };
 
 export const deleteStudent = async (id: string): Promise<void> => {
-  const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+  const response = await fetch(`${API_URL}/student/${id}`, {  
+    method: 'DELETE',
+  });
   if (!response.ok) throw new Error('Failed to delete student');
 };

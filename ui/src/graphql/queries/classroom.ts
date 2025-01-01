@@ -6,35 +6,22 @@ export const GET_ALL_CLASSROOMS = gql`
       id
       name
       capacity
-      teacherId
     }
   }
 `;
 
 export const SAVE_CLASSROOM = gql`
-  mutation SaveClassroom($name: String!, $capacity: Int!, $teacherId: ID) {
-    saveClassroom(classroom: { name: $name, capacity: $capacity, teacherId: $teacherId }) {
+  mutation SaveClassroom($name: String, $capacity: Int) {
+    saveClassroom(classroomRequest: { name: $name, capacity: $capacity }) {
       id
       name
       capacity
-      teacherId
-    }
-  }
-`;
-
-export const UPDATE_CLASSROOM = gql`
-  mutation UpdateClassroom($id: ID!, $name: String!, $capacity: Int!, $teacherId: ID) {
-    updateClassroom(id: $id, classroom: { name: $name, capacity: $capacity, teacherId: $teacherId }) {
-      id
-      name
-      capacity
-      teacherId
     }
   }
 `;
 
 export const DELETE_CLASSROOM = gql`
-  mutation DeleteClassroom($id: ID!) {
+  mutation DeleteClassroom($id: Int!) {
     deleteClassroom(id: $id)
   }
 `;

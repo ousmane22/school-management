@@ -36,8 +36,8 @@ export function StudentList({ students, classrooms, onEdit, onDelete }: StudentL
         <tbody className="divide-y divide-gray-200">
           {students.map((student) => (
             <tr key={student.id}>
-              <td className="px-6 py-4 whitespace-nowrap">{student.firstName}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{student.lastName}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{student.firstname}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{student.lastname}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {getClassroomName(student.classroomId)}
               </td>

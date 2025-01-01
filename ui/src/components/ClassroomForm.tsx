@@ -10,14 +10,14 @@ interface ClassroomFormProps {
 export function ClassroomForm({ classroom, onSubmit, onCancel }: ClassroomFormProps) {
   const [formData, setFormData] = useState({
     name: '',
-    capacity: '', // Initialize as empty string instead of 0
+    capacity: '', 
   });
 
   useEffect(() => {
     if (classroom) {
       setFormData({
         name: classroom.name,
-        capacity: classroom.capacity.toString(), // Convert number to string for input value
+        capacity: classroom.capacity.toString(), 
       });
     }
   }, [classroom]);
@@ -26,7 +26,7 @@ export function ClassroomForm({ classroom, onSubmit, onCancel }: ClassroomFormPr
     e.preventDefault();
     onSubmit({
       ...formData,
-      capacity: parseInt(formData.capacity) || 0, // Convert back to number, default to 0 if parsing fails
+      capacity: parseInt(formData.capacity) || 0,
       ...(classroom && { id: classroom.id }),
     });
   };

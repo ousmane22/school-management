@@ -10,16 +10,16 @@ interface StudentFormProps {
 
 export function StudentForm({ student, classrooms, onSubmit, onCancel }: StudentFormProps) {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     classroomId: '',
   });
 
   useEffect(() => {
     if (student) {
       setFormData({
-        firstName: student.firstName,
-        lastName: student.lastName,
+        firstname: student.firstname,
+        lastname: student.lastname,
         classroomId: student.classroomId,
       });
     }
@@ -36,8 +36,8 @@ export function StudentForm({ student, classrooms, onSubmit, onCancel }: Student
         <label className="block text-sm font-medium text-gray-700">First Name</label>
         <input
           type="text"
-          value={formData.firstName}
-          onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+          value={formData.firstname}
+          onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           required
         />
@@ -46,8 +46,8 @@ export function StudentForm({ student, classrooms, onSubmit, onCancel }: Student
         <label className="block text-sm font-medium text-gray-700">Last Name</label>
         <input
           type="text"
-          value={formData.lastName}
-          onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+          value={formData.lastname}
+          onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           required
         />

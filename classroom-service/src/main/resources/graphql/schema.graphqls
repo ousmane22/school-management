@@ -1,0 +1,20 @@
+type Query {
+   getAllClassrooms: [Classroom]
+   classroomById(id: Int): Classroom
+}
+
+type Mutation {
+   saveClassroom(classroomRequest: ClassroomRequest): Classroom
+   deleteClassroom(id: Int): String
+}
+
+type Classroom {
+   id: Int
+   capacity: Int
+   name: String
+}
+
+input ClassroomRequest {
+   capacity: Int
+   name: String
+}
