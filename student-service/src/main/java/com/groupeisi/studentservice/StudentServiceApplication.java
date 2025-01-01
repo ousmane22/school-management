@@ -15,10 +15,19 @@ public class StudentServiceApplication {
     }
 
     @Bean
-    CommandLineRunner start(StudentRepository studentRepository){
+    CommandLineRunner start(StudentRepository studentRepository) {
         return args -> {
-            studentRepository.save(Student.builder().firstname("Ousmane").lastname("Ndiaye").build());
-            studentRepository.save(Student.builder().firstname("Laye").lastname("Ly").build());
+            studentRepository.save(Student.builder()
+                    .firstname("Ousmane")
+                    .lastname("Ndiaye")
+                    .classroomId(1L)
+                    .build());
+            studentRepository.save(Student.builder()
+                    .firstname("Laye")
+                    .lastname("Ly")
+                    .classroomId(2L)
+                    .build());
         };
     }
+
 }

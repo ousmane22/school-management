@@ -55,22 +55,4 @@ public class StudentRestController {
         }
         return ResponseEntity.noContent().build();
     }
-
-    @GetMapping("/gql/classrooms")
-    public Mono<List<Classroom>> customerListGql(){
-        HttpGraphQlClient graphQlClient = HttpGraphQlClient.builder()
-                .url("http://localhost:9999/classroom-service/graphql")
-                .build();
-        var httpRequestDocument= """
-                 query {
-                     getAllClassrooms{
-                       name,capacity, id
-                     }
-                   }
-                """;
-        Mono<List<Classroom>> classrooms = graphQlClient.document(httpRequestDocument)
-                .retrieve("getAllClassrooms")
-                .toEntityList(Classroom.class);
-        return classrooms;
-    }
 }

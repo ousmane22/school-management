@@ -6,5 +6,5 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class StudentRequest{
-    private String firstname; private String lastname;
+    private String firstname; private String lastname;private String classroomId;
 }
