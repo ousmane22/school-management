@@ -124,6 +124,47 @@ services:
       timeout: 5s
       retries: 5
 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: passer
+      MYSQL_DATABASE: school_management
+      MYSQL_USER: user
+      MYSQL_PASSWORD: passer
+    ports:
+      - "3306:3306"
+    networks:
+      - shared-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  teacher-service:
+    build: ./teacher-service
+    container_name: teacher-service
+    ports:
+      - "3000:3000"
+    networks:
+      - shared-network
+    depends_on:
+      - consul
+    environment:
+      DB_HOST: mysql
+      DB_USER: user
+      DB_PASSWORD: passer
+      DB_NAME: school_management
+      SPRING_PROFILES_ACTIVE: docker
+      CONSUL_HOST: consul-server
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000/api/teachers" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 networks:
   shared-network:
     driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local

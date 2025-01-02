@@ -1,0 +1,1 @@
+{"Token":"","Service":{"ID":"teacher-service","Service":"teacher-service","Tags":["nodejs","teacher-service"],"Address":"teacher-service","Meta":null,"Port":3000,"Weights":{"Passing":1,"Warning":1},"EnableTagOverride":false,"Proxy":{"Mode":"","MeshGateway":{},"Expose":{}},"Connect":{},"PeerName":"","CreateIndex":0,"ModifyIndex":0},"Source":"remote"}
