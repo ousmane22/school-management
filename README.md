@@ -15,3 +15,5 @@ Cette commande démarre tous les conteneurs, y compris **Consul**, utilisé comm
 
 Pour arrêter les conteneurs, utilisez `docker-compose down`.
 
+![Screenshot 2025-01-02 121026.png](..%2FScreenshot%202025-01-02%20121026.png)
+![Screenshot 2025-01-02 121056.png](..%2FScreenshot%202025-01-02%20121056.png)
