@@ -82,6 +82,27 @@ services:
       timeout: 5s
       retries: 5
 
+  subject-service:
+    build: ./subject-service
+    container_name: subject-service
+    ports:
+      - "8083:8083"
+    networks:
+      - shared-network
+    depends_on:
+      consul:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONSUL_HOST: consul-server
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8082/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   gateway-service:
     build: ./gateway-service
     container_name: gateway-service
