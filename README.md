@@ -14,3 +14,4 @@ Cette commande démarre tous les conteneurs, y compris **Consul**, utilisé comm
 - Interface GraphQL des classes : `http://localhost:9999/classroom-service/graphiql`.
 
 Pour arrêter les conteneurs, utilisez `docker-compose down`.
+
