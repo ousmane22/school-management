@@ -6,18 +6,33 @@ import com.groupeisi.studentservice.mapper.StudentMapper;
 import com.groupeisi.studentservice.repositories.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
     private StudentMapper studentMapper;
+    private  ClassromGraphQLClientService classroomService;
 
     public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+        List<Student> students = studentRepository.findAll();
+
+        return students.stream().map(student -> {
+            Mono<String> classroomNameMono = classroomService.getClassroomById(student.getClassroomId())
+                    .map(classroom -> classroom.getName())
+                    .onErrorResume(error -> {
+                        System.err.println("Error fetching classroom name: " + error.getMessage());
+                        return Mono.just("Unknown");
+                    });
+
+            student.setClassroomName(classroomNameMono.block());
+            return student;
+        }).collect(Collectors.toList());
     }
 
     public Optional<Student> getStudentById(Long id) {
