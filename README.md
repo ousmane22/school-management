@@ -26,4 +26,5 @@ Pour arrêter les conteneurs, utilisez `docker-compose down`.
 <img width="946" alt="image" src="https://github.com/user-attachments/assets/7b24fbe6-866b-4085-8cb3-64a714ac6381" />
 <img width="948" alt="image" src="https://github.com/user-attachments/assets/a6b6dada-4337-4f5c-a9f6-f3dd3a76cc72" />
 <img width="950" alt="image" src="https://github.com/user-attachments/assets/25596172-681d-4378-85f6-e336da325530" />
+<img width="953" alt="image" src="https://github.com/user-attachments/assets/9b966435-640b-4aca-ae6d-9ed29f5af8d0" />
 
