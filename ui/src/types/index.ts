@@ -1,29 +1,26 @@
-export interface Teacher {
-  id: string;
-  name: string;
-  email: string;
-  subject: string;
-}
-
 export interface Student {
-  id: string;
-  name: string;
-  email: string;
-  grade: string;
-  classId: string;
+  id: number;
+  firstname: string;
+  lastname: string;
+  classroomId: number;
+  classroomName: string;
 }
 
-export interface Subject {
-  id: string;
+export interface Teacher {
+  id: number;
   name: string;
-  description: string;
-  teacherId: string;
+  email: string;
 }
 
 export interface Classroom {
-  id: string;
+  id: number;
   name: string;
-  grade: string;
-  teacherId: string;
-  students: string[];
+  capacity: number;
+}
+
+export interface Subject {
+  id: number;
+  name: string;
+  description: string;
+  teacherId: number;
 }
